@@ -275,15 +275,25 @@ export const getRole = (id: string) => ROLES.find((r) => r.id === id);
 export const getDomain = (id: string) => DOMAINS.find((d) => d.id === id);
 export const roleSkillIds = (r: Role) => (Object.keys(r.skills) as Category[]).flatMap((c) => r.skills[c]);
 
-export type LearningResource = { label: string; url: string; category: 'free' | 'paid' | 'youtube'; note: string };
+export type LearningResource = { label: string; url: string; category: 'youtube' | 'free' | 'paid' | 'other'; note: string };
 
 export function resourcesFor(skillId: string): LearningResource[] {
   const q = encodeURIComponent(SKILLS[skillId]?.name ?? skillId);
   return [
+    { label: 'YouTube full courses', url: `https://www.youtube.com/results?search_query=${q}+full+course`, category: 'youtube', note: 'Complete free video courses' },
+    { label: 'YouTube tutorials for beginners', url: `https://www.youtube.com/results?search_query=${q}+tutorial+for+beginners`, category: 'youtube', note: 'Short beginner-friendly lessons' },
+    { label: 'YouTube projects', url: `https://www.youtube.com/results?search_query=${q}+project+tutorial`, category: 'youtube', note: 'Build real projects step by step' },
     { label: 'freeCodeCamp', url: `https://www.freecodecamp.org/news/search/?query=${q}`, category: 'free', note: 'Free tutorials and course results' },
     { label: 'MIT OpenCourseWare', url: `https://ocw.mit.edu/search/?q=${q}`, category: 'free', note: 'Free university course materials' },
+    { label: 'Khan Academy', url: `https://www.khanacademy.org/search?search_again=1&page_search_query=${q}`, category: 'free', note: 'Free structured lessons' },
+    { label: 'NPTEL / SWAYAM', url: `https://www.google.com/search?q=${q}+site%3Aonlinecourses.nptel.ac.in+OR+site%3Aswayam.gov.in`, category: 'free', note: 'Free Indian university courses with optional certificates' },
     { label: 'Udemy', url: `https://www.udemy.com/courses/search/?q=${q}&price=price-paid`, category: 'paid', note: 'Paid course results · prices vary' },
     { label: 'Coursera', url: `https://www.coursera.org/search?query=${q}`, category: 'paid', note: 'Paid certificates and subscriptions · some free access' },
-    { label: 'YouTube full courses', url: `https://www.youtube.com/results?search_query=${q}+full+course`, category: 'youtube', note: 'Free video course results' },
+    { label: 'edX', url: `https://www.edx.org/search?q=${q}`, category: 'paid', note: 'University certificates · audit options available' },
+    { label: 'Pluralsight', url: `https://www.pluralsight.com/search?q=${q}`, category: 'paid', note: 'Subscription skill paths' },
+    { label: 'GeeksforGeeks', url: `https://www.geeksforgeeks.org/search/?gq=${q}`, category: 'other', note: 'Articles, practice problems and interview prep' },
+    { label: 'W3Schools', url: `https://www.w3schools.com/search/search.php?q=${q}`, category: 'other', note: 'Quick references and try-it examples' },
+    { label: 'GitHub learning repos', url: `https://github.com/search?q=${q}+learning+resources&type=repositories`, category: 'other', note: 'Curated roadmaps and open-source examples' },
+    { label: 'Medium articles', url: `https://medium.com/search?q=${q}`, category: 'other', note: 'Practitioner write-ups and guides' },
   ];
 }

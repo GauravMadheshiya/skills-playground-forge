@@ -17,6 +17,8 @@ select{color-scheme:inherit!important}
 .learning-dialog{width:calc(100% - 32px);max-height:calc(100dvh - 40px);overflow-y:auto;border-radius:8px}
 .learning-dialog [data-slot]{letter-spacing:0}
 .learning-groups{display:grid;gap:18px}
+.learning-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(min-width:560px){.learning-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .learning-group h3{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--primary);padding-bottom:8px;border-bottom:1px solid var(--border)}
 .learning-link{width:100%;height:auto;min-height:62px;justify-content:space-between;text-align:left;padding:10px 8px;white-space:normal}
 .learning-link span{display:grid;gap:5px;min-width:0}
