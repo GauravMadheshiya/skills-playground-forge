@@ -6,4 +6,6 @@
 - [x] Restore dashboard, resume analyzer, interview practice, jobs and sample profiles.
 - [x] Implement email/Google sign-in and guest progress migration.
 - [x] Verify guest core flows, TXT/PDF/DOCX parsing, Markdown/PDF exports, tests, mobile layouts and clean preview compilation.
-- [ ] Verify signed-in saving and guest migration end-to-end — blocked: no account exists; user must sign in or sign up first.
+- [ ] Verify signed-in saving and guest migration end-to-end — blocked: no account exists; user must sign in or sign up first.- [x] Soft Skills hub with practice simulator (text + voice).
+- [x] Voice mock interview in 11 Indian languages (Sarvam AI) with Gemini delivery analysis.
+- [x] Floating AI career assistant on every page.

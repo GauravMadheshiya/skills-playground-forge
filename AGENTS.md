@@ -18,3 +18,5 @@
 - Apply theme overrides on the document root and store only the local display preference, so all pages and dialogs share the selected theme without changing career progress.
 - Resolve skill learning resources through resourcesFor in the role catalog and display them in LearningOptions, so every roadmap skill shares categorized provider discovery links with human-readable queries.
 - Present curated career boards explicitly as collections rather than verified live vacancies, so static examples never misrepresent hiring availability.
+- Route all AI and speech calls through server functions in src/lib/ai.functions.ts that read provider keys from server env, so secrets never reach the browser and models can be swapped in one place.
+- Record voice with live browser transcription first and replace it with the server transcript when available, so speech input still works when the speech service is slow or fails.
