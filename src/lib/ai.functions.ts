@@ -1,37 +1,58 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
 
-const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3-flash-preview', 'gemini-3.1-flash-lite'];
+
+/** Backup route through the built-in AI service when the Gemini key fails or is busy. */
+async function callGateway(system: string, contents: { role: 'user' | 'model'; text: string }[], json: boolean): Promise<string> {
+  const key = process.env['LOVABLE_API_KEY'];
+  if (!key) throw new Error('AI service unavailable.');
+  const res = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      model: 'google/gemini-3.8-flash',
+      messages: [{ role: 'system', content: system }, ...contents.map((c) => ({ role: c.role === 'model' ? 'assistant' : 'user', content: c.text }))],
+      ...(json ? { response_format: { type: 'json_object' } } : {}),
+    }),
+  });
+  if (!res.ok) {
+    console.error('Gateway error', res.status, (await res.text()).slice(0, 300));
+    if (res.status === 402) throw new Error('AI credits are used up. Please add credits to continue.');
+    throw new Error('The AI is busy right now. Please try again in a minute.');
+  }
+  const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+  const text = data.choices?.[0]?.message?.content ?? '';
+  if (!text) throw new Error('The AI returned an empty response.');
+  return text;
+}
 
 async function callGemini(system: string, contents: { role: 'user' | 'model'; text: string }[], json: boolean): Promise<string> {
   const key = process.env['GEMINI_API_KEY'];
-  if (!key) throw new Error('The AI service is not configured yet.');
-  let lastError = 'AI service unavailable.';
-  for (const model of GEMINI_MODELS) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: system }] },
-        contents: contents.map((c) => ({ role: c.role, parts: [{ text: c.text }] })),
-        generationConfig: json ? { responseMimeType: 'application/json', temperature: 0.4 } : { temperature: 0.6 },
-      }),
-    });
-    if (res.ok) {
-      const data = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-      const text = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? '').join('') ?? '';
-      if (text) return text;
-      lastError = 'The AI returned an empty response.';
-      continue;
+  if (key) {
+    for (const model of GEMINI_MODELS) {
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: system }] },
+            contents: contents.map((c) => ({ role: c.role, parts: [{ text: c.text }] })),
+            generationConfig: json ? { responseMimeType: 'application/json' } : {},
+          }),
+        });
+        if (res.ok) {
+          const data = (await res.json()) as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] } }[] };
+          const text = data.candidates?.[0]?.content?.parts?.filter((p) => !p.thought).map((p) => p.text ?? '').join('') ?? '';
+          if (text) return text;
+          continue;
+        }
+        console.error('Gemini error', model, res.status, (await res.text()).slice(0, 300));
+        if (res.status === 401 || res.status === 403 || res.status === 400) break;
+      } catch (e) { console.error('Gemini fetch failed', model, e); }
     }
-    const body = await res.text();
-    console.error('Gemini error', model, res.status, body.slice(0, 400));
-    if (res.status === 401 || res.status === 403) throw new Error('The AI key was rejected. Please check the Gemini API key.');
-    lastError = res.status === 429 || res.status >= 500 ? 'The AI is busy right now. Please try again in a minute.' : `AI request failed (${res.status}).`;
-    // Busy/unavailable/retired models: fall through to the next model.
-    if (res.status !== 404 && res.status !== 429 && res.status < 500) break;
   }
-  throw new Error(lastError);
+  return callGateway(system, contents, json);
 }
 
 /* ---------- Speech to text (Sarvam AI) ---------- */
