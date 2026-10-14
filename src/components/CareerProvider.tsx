@@ -15,7 +15,9 @@ function guestProgress(): ProgressData {
   } catch { return emptyProgress; }
 }
 type CareerContext = { progress: ProgressData; user: User|null; loading: boolean; status: string; setSkill: (id:string,level:number)=>void; setTarget: (id:string)=>void; toggleMilestone: (role:string,id:string)=>void; loadSample: (target:string,skills:Owned)=>void; signOut: ()=>Promise<void> };
-const Context = createContext<CareerContext|null>(null);
+// Keep one context instance across hot reloads so consumers never lose the provider.
+const g = globalThis as typeof globalThis & { __careerContext?: React.Context<CareerContext|null> };
+const Context = g.__careerContext ?? (g.__careerContext = createContext<CareerContext|null>(null));
 export function CareerProvider({children}:{children:ReactNode}) {
   const [progress,setProgress]=useState<ProgressData>(emptyProgress), [user,setUser]=useState<User|null>(null), [loading,setLoading]=useState(true), [status,setStatus]=useState('Loading progress');
   const [identity,setIdentity]=useState<string|null>(null); const generation=useRef(0); const router=useRouter(); const qc=useQueryClient();
