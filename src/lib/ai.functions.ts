@@ -27,9 +27,9 @@ async function callGemini(system: string, contents: { role: 'user' | 'model'; te
     const body = await res.text();
     console.error('Gemini error', model, res.status, body.slice(0, 400));
     if (res.status === 401 || res.status === 403) throw new Error('The AI key was rejected. Please check the Gemini API key.');
-    if (res.status === 429) throw new Error('The AI is busy right now. Please try again in a minute.');
-    lastError = `AI request failed (${res.status}).`;
-    if (res.status !== 404) break;
+    lastError = res.status === 429 || res.status >= 500 ? 'The AI is busy right now. Please try again in a minute.' : `AI request failed (${res.status}).`;
+    // Busy/unavailable/retired models: fall through to the next model.
+    if (res.status !== 404 && res.status !== 429 && res.status < 500) break;
   }
   throw new Error(lastError);
 }
