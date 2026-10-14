@@ -1,0 +1,11 @@
+export const JOBS = [
+ {id:'vercel',company:'Vercel',title:'Frontend engineering',location:'Remote / Global',type:'Full-time',domain:'software',skills:['javascript','typescript','react','git','web_perf','accessibility'],url:'https://vercel.com/careers'},
+ {id:'stripe',company:'Stripe',title:'Full-stack & backend engineering',location:'Global / Hybrid',type:'Full-time',domain:'software',skills:['typescript','sql','rest_api','testing','system_design','communication'],url:'https://stripe.com/jobs/search'},
+ {id:'huggingface',company:'Hugging Face',title:'Machine learning engineering',location:'Remote / Global',type:'Full-time',domain:'data',skills:['python','ml','pytorch','deep_learning','llms','git'],url:'https://apply.workable.com/huggingface/'},
+ {id:'databricks',company:'Databricks',title:'Data & AI opportunities',location:'Global / Hybrid',type:'Full-time',domain:'data',skills:['python','sql','spark','etl','ml','aws'],url:'https://www.databricks.com/company/careers/open-positions'},
+ {id:'cloudflare',company:'Cloudflare',title:'Cloud & infrastructure engineering',location:'Global / Hybrid',type:'Full-time',domain:'cloud',skills:['linux','networking','docker','kubernetes','go','monitoring'],url:'https://www.cloudflare.com/careers/jobs/'},
+ {id:'crowdstrike',company:'CrowdStrike',title:'Security engineering & operations',location:'Remote / Global',type:'Full-time',domain:'security',skills:['security_fund','linux','networking','incident_response','python','siem'],url:'https://www.crowdstrike.com/en-us/careers/'},
+ {id:'figma',company:'Figma',title:'Product & design opportunities',location:'Global / Hybrid',type:'Full-time',domain:'design',skills:['figma','ux_research','prototyping','design_systems','communication'],url:'https://www.figma.com/careers/'},
+ {id:'atlassian',company:'Atlassian',title:'Product management & quality engineering',location:'Remote / Global',type:'Full-time',domain:'product',skills:['agile','communication','problem_solving','testing','sql'],url:'https://www.atlassian.com/company/careers/all-jobs'},
+];
+export function jobMatch(skills:string[],owned:Record<string,number>){const missing=skills.filter(id=>!owned[id]);return {missing,score:Math.round((skills.length-missing.length)/skills.length*100)};}

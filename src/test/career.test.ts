@@ -1,0 +1,17 @@
+import {describe,it,expect} from 'vitest';
+import {DOMAINS,ROLES,SKILLS,roleSkillIds,resourcesFor} from '@/data/catalog';
+import {analyze,buildMilestones,roadmapMarkdown} from '@/lib/analysis';
+import {mergeProgress,resumeAlignment,scoreAnswer} from '@/lib/career';
+import {jobMatch} from '@/data/jobs';
+describe('Career rules',()=>{
+ it('offers free, paid, and YouTube learning resources for every catalog skill',()=>{for(const id of Object.keys(SKILLS)){const resources=resourcesFor(id);expect(new Set(resources.map(r=>r.category))).toEqual(new Set(['free','paid','youtube']));for(const resource of resources)expect(new URL(resource.url).protocol).toBe('https:');}});
+ it('uses readable skill names rather than internal IDs in course searches',()=>{const resources=resourcesFor('state_mgmt');for(const resource of resources){const url=new URL(resource.url);const query=url.searchParams.get('q')??url.searchParams.get('query')??url.searchParams.get('search_query');expect(query).toContain('State Management');expect(query).not.toContain('state_mgmt');}});
+ it('provides at least 25 roles in exactly 8 domains',()=>{expect(ROLES.length).toBeGreaterThanOrEqual(25);expect(DOMAINS).toHaveLength(8);expect(new Set(ROLES.map(r=>r.domain)).size).toBe(8);});
+ it('scores all beginner, intermediate and advanced ratings at increasing depth',()=>{const role=ROLES[0];if(!role)throw new Error('Role missing');const ratings=(level:number)=>Object.fromEntries(roleSkillIds(role).map(id=>[id,level]));expect(analyze(role,{}).score).toBe(0);expect(analyze(role,ratings(1)).score).toBe(60);expect(analyze(role,ratings(2)).score).toBe(80);expect(analyze(role,ratings(3)).score).toBe(100);});
+ it('migrates guest skills and milestones without losing account progress',()=>{expect(mergeProgress({skills:{react:3,sql:2},milestones:{frontend:['one']},target:'frontend'},{skills:{react:1,python:2},milestones:{frontend:['two','one']},target:'ml-engineer'})).toEqual({skills:{react:3,sql:2,python:2},milestones:{frontend:['one','two']},target:'ml-engineer'});});
+ it('exports milestone completion in markdown',()=>{const role=ROLES[0];if(!role)throw new Error('Role missing');const milestone=buildMilestones(role,{})[0];if(!milestone)throw new Error('Milestone missing');expect(roadmapMarkdown(role,{},[milestone.id])).toContain(`- [x] ${milestone.title}`);});
+ it('calculates exact keyword alignment and missing skills',()=>{const role=ROLES[0];if(!role)throw new Error('Role missing');const result=resumeAlignment(role,'TypeScript React Git SQL');expect(result.matched).toEqual(expect.arrayContaining(['TypeScript','React','Git','SQL']));expect(result.missing).toContain('HTML');expect(result.score).toBe(Math.round(result.matched.length/roleSkillIds(role).length*100));});
+ it('does not count partial keyword matches',()=>{const role=ROLES[0];if(!role)throw new Error('Role missing');expect(resumeAlignment(role,'legitimate digital reaction').matched).not.toContain('Git');});
+ it('scores all four STAR dimensions from a concrete answer',()=>{expect(scoreAnswer('When our team had a slow project, my task was to improve performance. I implemented caching and tested the service. The result reduced latency by 40 percent.').score).toBe(100);expect(scoreAnswer('hello').score).toBe(0);});
+ it('calculates job matches from actual known prerequisites',()=>{expect(jobMatch(['react','sql','git','python'],{react:2,git:1})).toEqual({score:50,missing:['sql','python']});});
+});
