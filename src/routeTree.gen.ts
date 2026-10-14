@@ -17,6 +17,7 @@ import { Route as InterviewRouteImport } from './routes/interview'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
+import { Route as SoftSkillsRouteImport } from './routes/soft-skills'
 import { Route as RolesRoleIdAssessRouteImport } from './routes/roles.$roleId.assess'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +60,11 @@ const RoadmapRoute = RoadmapRouteImport.update({
   path: '/roadmap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SoftSkillsRoute = SoftSkillsRouteImport.update({
+  id: '/soft-skills',
+  path: '/soft-skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RolesRoleIdAssessRoute = RolesRoleIdAssessRouteImport.update({
   id: '/roles/$roleId/assess',
   path: '/roles/$roleId/assess',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/jobs': typeof JobsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
+  '/soft-skills': typeof SoftSkillsRoute
   '/roles/$roleId/assess': typeof RolesRoleIdAssessRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/jobs': typeof JobsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
+  '/soft-skills': typeof SoftSkillsRoute
   '/roles/$roleId/assess': typeof RolesRoleIdAssessRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/jobs': typeof JobsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
+  '/soft-skills': typeof SoftSkillsRoute
   '/roles/$roleId/assess': typeof RolesRoleIdAssessRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/jobs'
     | '/resume'
     | '/roadmap'
+    | '/soft-skills'
     | '/roles/$roleId/assess'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/jobs'
     | '/resume'
     | '/roadmap'
+    | '/soft-skills'
     | '/roles/$roleId/assess'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/jobs'
     | '/resume'
     | '/roadmap'
+    | '/soft-skills'
     | '/roles/$roleId/assess'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   JobsRoute: typeof JobsRoute
   ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRoute
+  SoftSkillsRoute: typeof SoftSkillsRoute
   RolesRoleIdAssessRoute: typeof RolesRoleIdAssessRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoadmapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/soft-skills': {
+      id: '/soft-skills'
+      path: '/soft-skills'
+      fullPath: '/soft-skills'
+      preLoaderRoute: typeof SoftSkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/roles/$roleId/assess': {
       id: '/roles/$roleId/assess'
       path: '/roles/$roleId/assess'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   JobsRoute: JobsRoute,
   ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRoute,
+  SoftSkillsRoute: SoftSkillsRoute,
   RolesRoleIdAssessRoute: RolesRoleIdAssessRoute,
 }
 export const routeTree = rootRouteImport

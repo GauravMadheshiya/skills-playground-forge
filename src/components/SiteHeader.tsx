@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowUpRight, Compass, Map, LayoutDashboard, FileScan, MessagesSquare, BriefcaseBusiness, Menu, X, LogOut, Zap } from 'lucide-react';
+import { ArrowUpRight, Compass, Map, LayoutDashboard, FileScan, MessagesSquare, BriefcaseBusiness, Menu, X, LogOut, Zap, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useCareer } from './CareerProvider';
 import { ThemeToggle } from './ThemeToggle';
-const nav=[{to:'/explore',label:'Explore Roles',icon:Compass},{to:'/roadmap',label:'My Roadmap',icon:Map},{to:'/dashboard',label:'Dashboard',icon:LayoutDashboard},{to:'/resume',label:'Resume ATS',icon:FileScan},{to:'/interview',label:'Mock Interview',icon:MessagesSquare},{to:'/jobs',label:'Jobs',icon:BriefcaseBusiness}] as const;
+const nav=[{to:'/explore',label:'Explore Roles',icon:Compass},{to:'/roadmap',label:'My Roadmap',icon:Map},{to:'/dashboard',label:'Dashboard',icon:LayoutDashboard},{to:'/resume',label:'Resume ATS',icon:FileScan},{to:'/interview',label:'Mock Interview',icon:MessagesSquare},{to:'/soft-skills',label:'Soft Skills',icon:Sparkles},{to:'/jobs',label:'Jobs',icon:BriefcaseBusiness}] as const;
 export function SiteHeader(){const {user,status,signOut}=useCareer();const [open,setOpen]=useState(false);return <>
   <header className="site-header"><div className="header-inner"><Link to="/" className="brand"><span className="brand-symbol"><Zap size={21} fill="currentColor"/></span>skillbridge<span className="brand-ai">AI</span></Link>
   <nav className="desktop-nav">{nav.map(n=><Link key={n.to} to={n.to} activeProps={{className:'nav-active'}}><n.icon size={15}/>{n.label}</Link>)}</nav>

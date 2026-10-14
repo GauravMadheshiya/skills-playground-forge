@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { CareerProvider } from "@/components/CareerProvider";
 import { SiteHeader } from "@/components/SiteHeader";
+import { CareerAssistant } from "@/components/CareerAssistant";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -125,7 +126,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <CareerProvider><SiteHeader /><Outlet /><Toaster /></CareerProvider>
+      <CareerProvider><SiteHeader /><Outlet /><CareerAssistant /><Toaster /></CareerProvider>
     </QueryClientProvider>
   );
 }
