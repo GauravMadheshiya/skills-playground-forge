@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
 
-const GEMINI_MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash'];
+const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 
 async function callGemini(system: string, contents: { role: 'user' | 'model'; text: string }[], json: boolean): Promise<string> {
   const key = process.env['GEMINI_API_KEY'];
