@@ -1,6 +1,6 @@
 # Career platform restoration
 - [ ] Add a cream light theme and persistent light/dark switch.
-- [ ] Expand skill learning options to free, paid, and YouTube courses and verify the flow.
+- [x] Learn dialog: YouTube, Free, Paid, Other tabs with multiple providers each.
 - [x] Inspect and restore the uploaded app's working catalog, assessment, and roadmap.
 - [x] Apply a unified polished navigation and design system.
 - [x] Restore dashboard, resume analyzer, interview practice, jobs and sample profiles.
