@@ -42,12 +42,12 @@ export const transcribeAudio = createServerFn({ method: 'POST' })
     if (!key) return { text: '', error: 'Speech service is not configured.' };
     const bytes = Uint8Array.from(atob(data.audio), (c) => c.charCodeAt(0));
     const ext = data.mime.includes('wav') ? 'wav' : data.mime.includes('ogg') ? 'ogg' : 'webm';
-    for (const model of ['saaras:v1', 'saarika:v2.5']) {
+    for (const model of ['saaras:v3', 'saarika:v2.5']) {
       const form = new FormData();
       form.append('file', new Blob([bytes], { type: data.mime.split(';')[0] || 'audio/webm' }), `answer.${ext}`);
       form.append('model', model);
-      if (model.startsWith('saarika')) form.append('language_code', data.language);
-      const res = await fetch(`https://api.sarvam.ai/${model.startsWith('saaras') ? 'speech-to-text-translate' : 'speech-to-text'}`, { method: 'POST', headers: { 'api-subscription-key': key }, body: form });
+      form.append('language_code', data.language);
+      const res = await fetch('https://api.sarvam.ai/speech-to-text', { method: 'POST', headers: { 'api-subscription-key': key }, body: form });
       if (res.ok) {
         const json = (await res.json()) as { transcript?: string };
         if (json.transcript) return { text: json.transcript, error: null };
