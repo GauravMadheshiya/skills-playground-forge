@@ -69,7 +69,8 @@ export function VoiceRecorder({ language, base, onText, onDuration, disabled }: 
   async function finish(mime: string) {
     const blob = new Blob(chunks.current, { type: mime || 'audio/webm' });
     if (blob.size < 2000) return;
-    if (blob.size > 10_000_000) { toast.message('Recording is long — kept the live transcript.'); return; }
+    // The speech service only accepts clips up to 30 seconds.
+    if (blob.size > 10_000_000 || Date.now() - start.current > 29_000) { toast.message('Recording is longer than 30 seconds — kept the live transcript.'); return; }
     setBusy(true);
     try {
       const res = await transcribe({ data: { audio: toBase64(await blob.arrayBuffer()), mime: blob.type, language } });
