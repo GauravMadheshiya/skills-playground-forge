@@ -1,24 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+import { createFileRoute } from '@tanstack/react-router';
+import { Explore } from './explore';
+export const Route=createFileRoute('/')({head:()=>({meta:[{title:'SkillBridge AI — Your next career chapter'},{name:'description',content:'Explore technology careers and turn your skills into a personalized learning roadmap.'},{property:'og:title',content:'SkillBridge AI — Your next career chapter'},{property:'og:description',content:'A clearer path to your next role in technology.'},{property:'og:type',content:'website'},{name:'twitter:card',content:'summary_large_image'}]}),component:Explore});

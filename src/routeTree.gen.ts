@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as InterviewRouteImport } from './routes/interview'
+import { Route as JobsRouteImport } from './routes/jobs'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
+import { Route as RolesRoleIdAssessRouteImport } from './routes/roles.$roleId.assess'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewRoute = InterviewRouteImport.update({
+  id: '/interview',
+  path: '/interview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsRoute = JobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RolesRoleIdAssessRoute = RolesRoleIdAssessRouteImport.update({
+  id: '/roles/$roleId/assess',
+  path: '/roles/$roleId/assess',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
+  '/interview': typeof InterviewRoute
+  '/jobs': typeof JobsRoute
+  '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
+  '/roles/$roleId/assess': typeof RolesRoleIdAssessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
+  '/interview': typeof InterviewRoute
+  '/jobs': typeof JobsRoute
+  '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
+  '/roles/$roleId/assess': typeof RolesRoleIdAssessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
+  '/interview': typeof InterviewRoute
+  '/jobs': typeof JobsRoute
+  '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
+  '/roles/$roleId/assess': typeof RolesRoleIdAssessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/explore'
+    | '/interview'
+    | '/jobs'
+    | '/resume'
+    | '/roadmap'
+    | '/roles/$roleId/assess'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/explore'
+    | '/interview'
+    | '/jobs'
+    | '/resume'
+    | '/roadmap'
+    | '/roles/$roleId/assess'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/explore'
+    | '/interview'
+    | '/jobs'
+    | '/resume'
+    | '/roadmap'
+    | '/roles/$roleId/assess'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  DashboardRoute: typeof DashboardRoute
+  ExploreRoute: typeof ExploreRoute
+  InterviewRoute: typeof InterviewRoute
+  JobsRoute: typeof JobsRoute
+  ResumeRoute: typeof ResumeRoute
+  RoadmapRoute: typeof RoadmapRoute
+  RolesRoleIdAssessRoute: typeof RolesRoleIdAssessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interview': {
+      id: '/interview'
+      path: '/interview'
+      fullPath: '/interview'
+      preLoaderRoute: typeof InterviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs': {
+      id: '/jobs'
+      path: '/jobs'
+      fullPath: '/jobs'
+      preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roles/$roleId/assess': {
+      id: '/roles/$roleId/assess'
+      path: '/roles/$roleId/assess'
+      fullPath: '/roles/$roleId/assess'
+      preLoaderRoute: typeof RolesRoleIdAssessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  DashboardRoute: DashboardRoute,
+  ExploreRoute: ExploreRoute,
+  InterviewRoute: InterviewRoute,
+  JobsRoute: JobsRoute,
+  ResumeRoute: ResumeRoute,
+  RoadmapRoute: RoadmapRoute,
+  RolesRoleIdAssessRoute: RolesRoleIdAssessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
