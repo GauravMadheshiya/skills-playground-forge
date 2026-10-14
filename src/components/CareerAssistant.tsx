@@ -20,7 +20,7 @@ function Markdown({ text }: { text: string }) {
     if (/^[-*•]\s+/.test(l) || /^\d+\.\s+/.test(l)) { list.push(<li key={i}>{inline(l.replace(/^([-*•]|\d+\.)\s+/, ''))}</li>); return; }
     flush();
     if (!l) return;
-    if (/^(-{3,}|\*{3,})$/.test(l)) { out.push(<hr key={i} />); return; }
+    if (/^(-{3,}|\*{3,})$/.test(l)) { flush(); out.push(<hr key={i} />); return; }
     if (/^#{1,4}\s/.test(l)) out.push(<h4 key={i}>{inline(l.replace(/^#+\s/, ''))}</h4>);
     else out.push(<p key={i}>{inline(l)}</p>);
   });
