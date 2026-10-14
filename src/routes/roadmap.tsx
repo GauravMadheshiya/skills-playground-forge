@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
-import { Download, FileDown, ExternalLink, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { Download, FileDown, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LearningOptions } from '@/components/LearningOptions';
 import { getRole, ROLES } from '@/data/catalog';
