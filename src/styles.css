@@ -50,9 +50,9 @@ select{color-scheme:inherit!important}
 
 /* Shared glow and fixed paper palette for personalized PDF exports. */
 :root {
- --icon-glow: 0 0 7px color-mix(in oklch, var(--primary) 42%, transparent);
- --action-glow: 0 4px 18px color-mix(in oklch, var(--primary) 32%, transparent);
- --action-glow-strong: 0 4px 28px color-mix(in oklch, var(--primary) 48%, transparent);
+ --icon-glow: 0 0 8px color-mix(in oklch, var(--primary) 70%, transparent), 0 0 20px color-mix(in oklch, var(--primary) 40%, transparent);
+ --action-glow: 0 0 12px 2px color-mix(in oklch, var(--primary) 65%, transparent), 0 4px 24px color-mix(in oklch, var(--primary) 55%, transparent);
+ --action-glow-strong: 0 0 22px 6px color-mix(in oklch, var(--primary) 85%, transparent), 0 6px 40px color-mix(in oklch, var(--primary) 75%, transparent);
  --pdf-ink: oklch(.25 .025 170); --pdf-muted: oklch(.48 .018 170);
  --pdf-paper: oklch(.995 .003 170); --pdf-surface: oklch(.96 .016 165);
  --pdf-accent: oklch(.44 .09 166); --pdf-white: oklch(1 0 0);
@@ -69,10 +69,10 @@ select{color-scheme:inherit!important}
 .roadmap-cta {
  min-height: 50px; height: auto; padding: 12px; gap: 9px; font-weight: 700;
  background: var(--primary); color: var(--primary-foreground);
- border: 1px solid color-mix(in oklch, var(--primary) 75%, var(--foreground));
- box-shadow: var(--action-glow); animation: roadmap-glow 3s ease-in-out infinite;
+ border: 1px solid color-mix(in oklch, var(--primary) 60%, var(--primary-foreground));
+ box-shadow: var(--action-glow); animation: roadmap-glow 2.2s ease-in-out infinite;
 }
-.roadmap-cta .roadmap-cta-icon { width: 22px; height: 22px; filter: drop-shadow(0 0 5px currentColor); }
+.roadmap-cta .roadmap-cta-icon { width: 22px; height: 22px; filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 14px color-mix(in oklch, currentColor 60%, transparent)); }
 .roadmap-cta:hover, .roadmap-cta:focus-visible { box-shadow: var(--action-glow-strong); }
 .pdf-download { box-shadow: var(--action-glow); }
 .pdf-download svg, .assistant-fab > svg { filter: drop-shadow(0 0 4px currentColor); }
