@@ -1,6 +1,6 @@
 # Career platform restoration
-- [ ] Highlight Build my roadmap and key icons with accessible glow styling.
-- [ ] Replace plain-text PDF export with a designed, personalized roadmap and verify the download.
+- [x] Highlight Build my roadmap and key icons with accessible glow styling.
+- [x] Replace plain-text PDF export with a designed, personalized roadmap and verify the download.
 - [ ] Add a cream light theme and persistent light/dark switch.
 - [x] Learn dialog: YouTube, Free, Paid, Other tabs with multiple providers each.
 - [x] Inspect and restore the uploaded app's working catalog, assessment, and roadmap.
