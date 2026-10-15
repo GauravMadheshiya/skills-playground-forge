@@ -20,3 +20,5 @@
 - Present curated career boards explicitly as collections rather than verified live vacancies, so static examples never misrepresent hiring availability.
 - Route all AI and speech calls through server functions in src/lib/ai.functions.ts that read provider keys from server env, so secrets never reach the browser and models can be swapped in one place.
 - Record voice with live browser transcription first and replace it with the server transcript when available, so speech input still works when the speech service is slow or fails.
+
+- Generate roadmap PDFs in the browser through src/lib/roadmap-pdf.ts from shared catalog and progress data, using the global print palette and pre-prepared blobs so downloads retain user activation.

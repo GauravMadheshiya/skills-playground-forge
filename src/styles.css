@@ -47,3 +47,42 @@ select{color-scheme:inherit!important}
 .assistant-chips{padding:0 12px;margin:6px 0}.assistant-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}.assistant-input input{flex:1;font-size:13px;padding:9px 12px}.assistant-input button{width:40px;border:0;border-radius:6px;background:var(--primary);color:var(--primary-foreground);display:grid;place-items:center;cursor:pointer}.assistant-input button:disabled{opacity:.45}
 @media (max-width:900px){.soft-module-body{grid-template-columns:1fr}.assistant-fab{right:16px;bottom:16px}.assistant-panel{right:16px;bottom:82px}}
 .assistant-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}.assistant-chips .chip{white-space:nowrap;flex-shrink:0}.chat-md hr{border:0;border-top:1px solid var(--border);margin:4px 0}
+
+/* Shared glow and fixed paper palette for personalized PDF exports. */
+:root {
+ --icon-glow: 0 0 7px color-mix(in oklch, var(--primary) 42%, transparent);
+ --action-glow: 0 4px 18px color-mix(in oklch, var(--primary) 32%, transparent);
+ --action-glow-strong: 0 4px 28px color-mix(in oklch, var(--primary) 48%, transparent);
+ --pdf-ink: oklch(.25 .025 170); --pdf-muted: oklch(.48 .018 170);
+ --pdf-paper: oklch(.995 .003 170); --pdf-surface: oklch(.96 .016 165);
+ --pdf-accent: oklch(.44 .09 166); --pdf-white: oklch(1 0 0);
+ --pdf-line: oklch(.87 .016 165); --pdf-gold: oklch(.84 .12 80);
+}
+.domain-icon svg, .metric-icon svg, .brand-symbol svg {
+ filter: drop-shadow(0 0 5px color-mix(in oklch, currentColor 45%, transparent));
+}
+.desktop-nav a > svg { display: block; width: 15px; height: 15px; flex-shrink: 0; }
+.desktop-nav a:hover > svg, .desktop-nav .nav-active > svg,
+.mobile-nav a > svg, .learn-button svg, .action-list > a > svg:first-child {
+ filter: drop-shadow(var(--icon-glow)); color: var(--primary);
+}
+.roadmap-cta {
+ min-height: 50px; height: auto; padding: 12px; gap: 9px; font-weight: 700;
+ background: var(--primary); color: var(--primary-foreground);
+ border: 1px solid color-mix(in oklch, var(--primary) 75%, var(--foreground));
+ box-shadow: var(--action-glow); animation: roadmap-glow 3s ease-in-out infinite;
+}
+.roadmap-cta .roadmap-cta-icon { width: 22px; height: 22px; filter: drop-shadow(0 0 5px currentColor); }
+.roadmap-cta:hover, .roadmap-cta:focus-visible { box-shadow: var(--action-glow-strong); }
+.pdf-download { box-shadow: var(--action-glow); }
+.pdf-download svg, .assistant-fab > svg { filter: drop-shadow(0 0 4px currentColor); }
+@keyframes roadmap-glow { 0%, 100% { box-shadow: var(--action-glow); } 50% { box-shadow: var(--action-glow-strong); } }
+@media (min-width:901px) and (max-width:1180px) {
+ .header-inner { gap: 12px; padding-inline: 18px; }
+ .desktop-nav { gap: 9px; } .desktop-nav a { font-size: 10px; gap: 3px; }
+ .desktop-nav a > svg { width: 13px; height: 13px; }
+ .brand { font-size: 19px; }
+}
+@media (max-width:600px) {
+ .section-label:has(.export-actions) { align-items: flex-start; flex-direction: column; gap: 12px; }
+}
