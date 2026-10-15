@@ -93,7 +93,7 @@ export async function createRoadmapPDF(role: Role, owned: Owned, done: string[])
       const detail = m.skillId ? SKILLS[m.skillId]?.why ?? '' : 'Turn your learning into portfolio evidence.';
       doc.setFontSize(9); doc.setFont('helvetica', 'normal');
       const detailLines: string[] = doc.splitTextToSize(clean(detail), 157);
-      const height = 21 + titleLines.length * 4.6 + detailLines.length * 4.6 + (m.skillId ? 10 : 0);
+      const height = 15 + titleLines.length * 4.6 + detailLines.length * 4.6 + (m.skillId ? 10 : 0);
       if (y + height > 275) {
         page(); text(`PHASE 0${phase} / CONTINUED`, 18, y, 9, accent, true); y += 13;
       }
